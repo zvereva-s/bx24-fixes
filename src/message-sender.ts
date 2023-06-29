@@ -64,8 +64,12 @@ class MessageSender {
   }
 
   private _eventHandler(e: MessageEvent): void {
+    if (typeof e.data !== 'string')
+    {
+      return;
+    }
     const arr = e.data.match(/(^.*?):(.*$)/);
-    if (arr.length === 3) {
+    if (arr && arr.length === 3) {
       this._resolvers[arr[1]].call(null, JSON.parse(arr[2]));
     }
   }
